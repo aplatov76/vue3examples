@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import {useUsers} from '@/use/users'
-import {defineComponent} from 'vue'
-export default defineComponent({
-    async setup(){
-        const {users} = await useUsers()
-        return{
-            users
+    import {useUsers} from '@/use/users'
+    import {defineComponent} from 'vue'
+    export default defineComponent({
+        async setup(){
+            const {users} = await useUsers()
+            return{
+                users
+            }
         }
-    }
-})
+    })
 </script>
