@@ -1,10 +1,6 @@
 <template>
   <div class="card">
-    <h1>{{title}}</h1>
-
-
-
-    <button class="btn" @click="navigate" >Открыть пользователей</button>
+    <h1 class="card-title">Список заявок</h1>
   </div>
 </template>
 <script lang="ts">

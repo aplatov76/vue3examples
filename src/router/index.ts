@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue';
 import Auth from '@/views/Auth.vue';
+import store from '../store';
 //import Help from '@/views/Help.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -9,7 +10,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: Home,
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
@@ -20,7 +22,8 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Help.vue'),
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     }
   },
   {
@@ -28,14 +31,29 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Auth',
     component: Auth,
     meta: {
-      layout: 'auth'
+      layout: 'auth',
+      auth: false
     }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  linkActiveClass: 'active',
+  linkExactActiveClass: 'active'
 })
+
+router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+  const requireAuth = to.meta.auth;
+  if(requireAuth && store.getters['authModule/isAuthenticated']){
+    next();
+  } else if(requireAuth && !store.getters['authModule/isAuthenticated']){
+    next('/auth?message=auth')
+  } else {
+    next()
+  }
+})
+
 
 export default router
