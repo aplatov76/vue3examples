@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import authModule from './modules/auth.module'
+import requestModule from './modules/request.module';
 import GlobalStateInterface from '@/interfaces/globalState.interface';
 
 export default createStore({
@@ -25,6 +26,7 @@ export default createStore({
     }
   },
   modules: {
-    authModule
+    authModule,
+    requestModule
   }
 })

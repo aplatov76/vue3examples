@@ -1,10 +1,8 @@
 <template>
 <the-navbar />
-<div class="container with-nav">
-    <div class="card">
+    <div class="container with-nav">
         <router-view></router-view>
     </div>
-</div>
 </template>
 
 <script lang="ts">
